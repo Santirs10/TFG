@@ -25,7 +25,7 @@ Fundamentos del hardware
 
 
 Tutor/a del proyecto:
-Sonia García Manzano
+Carlos Villarrubia Martín
 
 
 Pasos a seguir:
