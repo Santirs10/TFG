@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        header,
+        footer {
+            background-color: #003366;
+            color: white;
+            padding: 1em;
+            position: fixed top;
+            width: 100vw;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 100vw;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .call-to-action {
+            background-color: #0099cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .call-to-action h2 {
+            margin: 0;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        .testimonials {
+            background-color: #f2f2f2;
+            padding: 1em;
+        }
+
+        footer {
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: blue;
+            color: lightblue;
+            transition: 1s ease;
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 4em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            width: 100%;
+            text-align: center;
+            margin: auto;
+            white-space: nowrap;
+            padding-bottom: 1em;
+        }
+
+        .lord {
+            float: left;
+            margin-left: 1em;
+        }
+    </style>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script>
+        let lord = document.querySelector('.lord');
+        function cambiarTrigger() {
+            let lordIcon = document.querySelector('.lord lord-icon');
+            lordIcon.setAttribute('trigger', 'hover');
+        }
+        function hover2() {
+            let lordIcon = document.querySelector('.lord lord-icon');
+            lordIcon.setAttribute('trigger', 'hover');
+            lordIcon.setAttribute('state', 'in');
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="lord" onmouseenter="hover2()">
+            <lord-icon src="https://cdn.lordicon.com/kkiecexg.json" trigger="in" delay="300" stroke="bold"
+                state="in-reveal" colors="primary:#2516c7,secondary:#30c9e8" style="width:100px;height:100px">
+            </lord-icon>
+        </div>
+        <div class="container ">
+            <div>
+                <h1>BANK</h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="bank.html">Inicio</a></li>
+                    <li><a href="#services">Sobre nosotros</a></li>
+                    <li><a href="#benefits">Avances</a></li>
+                    <li><a href="#testimonials">Testimonios</a></li>
+                    <li><a href="https:\\google.es">Registrate</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <h2>Welcome to Your <strong>Bank Name</strong></h2>
+            <p>Your trusted partner in financial success.</p>
+        </section>
+
+        <!-- Services  -->
+        <section id="services">
+            <h3>Our Services</h3>
+            <p>We offer a range of financial services to meet all of your banking needs, from personal checking accounts
+                to business loans.</p>
+            <!-- Add more information about services here -->
+        </section>
+
+        <!-- Benefits Section -->
+        <section id="benefits">
+            <h3>Benefits of Banking with Us</h3>
+            <ul>
+                <li>Secure online banking</li>
+                <li>Competitive interest rates</li>
+                <li>24/7 customer support</li>
+                <!-- Add more benefits here -->
+            </ul>
+        </section>
+
+        <!-- Testimonios -->
+        <section id="testimonials" class="testimonials">
+            <h3>Testimonios de clientes</h3>
+            <blockquote>
+                <p>"I've been a customer for over a decade and have always received top-notch service from Your Bank
+                    Name."</p>
+                <cite>- Jane Doe</cite>
+            </blockquote>
+            <!-- Más -->
+        </section>
+
+        <!-- Sign Up -->
+        <section id="signup" class="call-to-action">
+            <h2>Empieza con nosotros en este momento</h2>
+            <p>Abrete una cuenta en unos sencillos pasos</p>
+            <button onclick="window.location.href='https:\\google.es'">Únete</button>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            &copy; 2024 Bank. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+
+</html>
