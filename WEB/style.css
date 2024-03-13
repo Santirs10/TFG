@@ -71,6 +71,7 @@ h1 {
     text-transform: uppercase;
     width: 100%;
     text-align: center;
+    align-content: center;
     margin: auto;
     white-space: nowrap;
     padding-bottom: 1em;
@@ -103,8 +104,8 @@ h1 {
     border: 2px solid lightblue;
     box-shadow: 5px 2px 5px gray;
     justify-content: center;
-overflow: hidden;
-word-wrap: break-word;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 .form-control{
     margin-bottom: 5%;
