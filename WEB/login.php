@@ -16,7 +16,6 @@
         let lord = document.querySelector('.lord');
         let pass = document.getElementById('inputPassword').value;
         let ojo = document.getElementById('ojo');
-
         function cambiarTrigger() {
             let lordIcon = document.querySelector('.lord lord-icon');
             lordIcon.setAttribute('trigger', 'hover');
@@ -40,7 +39,7 @@
             }
 
             let letraCalculada = letras[numeroDNI % 23];
-
+           
             if( letraDNI !== letraCalculada){
                 alert("Escribe el DNI correcto")
                 return false
@@ -71,7 +70,7 @@
 
     <div class="container" >
         <div class="column d-flex">
-            <div class="lord" onmouseenter="hover2()" onclick="window.location.href='main.html'">
+            <div class="lord" onmouseenter="hover2()" onclick="window.location.href='index.html'">
                 <lord-icon src="https://cdn.lordicon.com/kkiecexg.json" trigger="in" delay="300" stroke="bold"
                     state="in-reveal" colors="primary:#2516c7,secondary:#30c9e8" style="width:100px;height:100px">
                 </lord-icon>
@@ -108,35 +107,54 @@
             </div>
             <button type="submit" class="btn btn-info button">Iniciar Sesión</button>
             <?php
-    // Verificar si se ha enviado el formulario
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Recuperar credenciales del formulario
-        $dni = $_POST["DNI"];
-        $clave = $_POST["CLAVE"];
-        $servername = "localhost";  // Nombre del servidor (normalmente localhost)
-        $database = "basededatos";  // Nombre de la base de datos
-        try {
-            // Intentar crear la conexión
-            $conn = new mysqli($servername, $dni, $clave, $database);
-            // Comprobar la conexión
-            if ($conn->connect_error) {
-                // Si la conexión falla, lanzar una excepción personalizada
-                throw new Exception();
-            }
-            // Si la conexión es exitosa, continuar con el código
-            header("Location: main.html");
-            exit();
-            // Cerrar conexión
-            $conn->close();
-        } catch (Exception $e) {
-            // Capturar la excepción y mostrar un mensaje personalizado
-            echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
-            
+            error_reporting(0);
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recuperar credenciales del formulario
+                $dni = $_POST["DNI"];
+                $clave = $_POST["CLAVE"];
+                
+    // Datos de conexión
+                $servername = "127.0.0.1";  // Nombre del servidor (IP)
+                $database = "world";  // Nombre de la base de datos (Use world)
+                $username = "root";   // Nombre de usuario de MySQL (usuario que solo pueda leer)
+                $password = "ADMIN23";   // Contraseña de MySQL cambiada
+            try {
+        // Crear conexión
+                $conn = new mysqli($servername, $username, $password, $database);
+        
+        // Comprobar la conexión
+        if ($conn->connect_error) {
+            // Si la conexión falla, lanzar una excepción personalizada
+            throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
         }
+        
+        // Consulta SQL para buscar en la base de datos
+        $sql = "SELECT * FROM usuarios WHERE DNI='$dni' AND CLAVE='$clave'";
+        $result = $conn->query($sql);
+        
+        // Comprobar si la consulta devolvió algún resultado
+        if ($result->num_rows > 0) {
+            // Si hay resultados, redirigir a otra página
+            echo "<meta http-equiv='refresh' content='0; url=index.html'>";
+            exit();
+        } else {
+            // Si no hay resultados, mostrar un mensaje de error
+            echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
+        }
+        if ($conn) {
+            $conn->close();
+        }
+    } catch (Exception $e) {
+        //Mostrar un mensaje personalizado de error
+        echo "<p style='color: red;'>" . $e->getMessage() . "</p>";
     }
-    ?>
+    
+    // Cerrar conexión
+
+}
+?>
             <div class="nocuenta">
-                ¿No tienes cuenta? <a href="register.html">Regístrate</a>
+                ¿No tienes cuenta? <a href="register.php">Regístrate</a>
                 
             </div>
         </form>

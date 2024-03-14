@@ -25,7 +25,33 @@
             lordIcon.setAttribute('trigger', 'hover');
             lordIcon.setAttribute('state', 'in');
         }
+        function validarDNI() {
+            let dniInput = document.getElementById('inputDNI').value;
+            let letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+            let numeroDNI = dniInput.substring(0, 8);
+            let letraDNI = dniInput.substring(8).toUpperCase();
 
+            if (numeroDNI.length !== 8 || letraDNI.length !== 1) {
+                alert("Longitud de DNI incorrecta")
+                return false; // Longitud incorrecta
+            }
+
+            let letraCalculada = letras[numeroDNI % 23];
+           
+            if( letraDNI !== letraCalculada){
+                alert("Escribe el DNI correcto")
+                return false
+            };
+        }
+
+        function comprobarDNI() {
+            dniInput = document.getElementById('inputDNI').value;
+            if (validarDNI()) {
+                alert('El DNI es válido.');
+            } else {
+                alert('El DNI no es válido.');
+            }
+        }
 
         function MostrarContraseña() {
             if (inputPassword.type == "password") {
@@ -87,7 +113,7 @@
             </div>
             <h1>Únete</h1>
         </div>
-        <form class="formulario" action="register.php" method="POST">
+        <form class="formulario" action="register.php" method="POST" onsubmit="return validarDNI()">
             <div>
                 <script src="https://cdn.lordicon.com/lordicon.js"></script>
                 <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="click"
@@ -106,7 +132,7 @@
             <div class="form-group row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Introduzca su DNI</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="inputdni" name="DNI" placeholder="DNI" required>
+                    <input type="text" class="form-control" id="inputDNI" name="DNI" placeholder="DNI" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -134,6 +160,7 @@
             </div>
             <button type="submit" class="btn btn-info button" onclick="ComprobarContraseña()">Únete</button>
             <?php
+            error_reporting(0);
     // Verificar si se ha enviado el formulario
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Recuperar datos del formulario
@@ -141,19 +168,12 @@
         $DNI = $_POST["DNI"];
         $EMAIL = $_POST["email"];
         $CLAVE = password_hash($_POST["CLAVE_CLARO"], PASSWORD_BCRYPT); // Hash de la contraseña
-        echo "<br>Sin encriptar: ";
-        echo $_POST["CLAVE_CLARO"];
-        echo " <br>Con encriptación: ";
-        echo $CLAVE;
-        echo " <br>Correo: ";
-        echo $EMAIL;
-        echo " <br>DNI: ";
-        echo $DNI;
+        $CLAVE_CL = $_POST["CLAVE_CLARO"];
         echo " <br>IP: ";
         echo $ipUsuario;
         // Conectar a la base de datos (ajusta según tu configuración)
         try {
-        $conn = new mysqli("localhost", "admin", "tu_contraseña", "tu_base_de_datos");
+        $conn = new mysqli("localhost", "root", "ADMIN23", "world");
 
         // Verificar la conexión
         if ($conn->connect_error) {
@@ -161,7 +181,8 @@
         }
 
         // Insertar datos en la tabla
-        $sql = "INSERT INTO usuarios (DNI, email, clave) VALUES ('$DNI', '$email', '$clave')";
+        $sql = "INSERT INTO usuarios (DNI, EMAIL, CLAVE) VALUES ('$DNI', '$EMAIL', '$CLAVE_CL')";
+        $sql = "commit;";
         if ($conn->query($sql) === TRUE) {
             echo "<p>Registro exitoso. Ahora puedes <a href='login.php'>iniciar sesión</a>.</p>";
         } else {
@@ -172,13 +193,13 @@
         $conn->close();
     } catch (Exception $e) {
         // Capturar la excepción y mostrar un mensaje personalizado
-        echo "<p style='color: red;'>Ha ocurrido un error. Por favor, inténtalo de nuevo.</p>";
+        echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
         
     }
     }
     ?>
             <div class="nocuenta">
-                ¿Ya tienes cuenta? <a href="login.html">Inicia Sesión</a>
+                ¿Ya tienes cuenta? <a href="login.php">Inicia Sesión</a>
             </div>
         </form>
 
