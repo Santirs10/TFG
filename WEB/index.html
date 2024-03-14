@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="bank.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
-    <title>BANK</title>
+    <title>Nano Banco</title>
 
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script>
@@ -40,8 +43,8 @@
 
             <nav>
                 <ul>
-                    <li><a href="main.html">Inicio</a></li>
-                    <li><a href="#services">Sobre nosotros</a></li>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="services.html">Sobre nosotros</a></li>
                     <li><a href="#benefits">Avances</a></li>
                     <li><a href="#testimonials">Testimonios</a></li>
                     <li><a href="login.php">Inicia Sesión</a></li>
@@ -53,52 +56,61 @@
 
     <div class="container">
         <!-- Hero -->
+        <h3>Bienvenido al <strong>Nano Banco</strong></h3>
         <section class="hero">
-            <h2>Welcome to Your <strong>Bank Name</strong></h2>
-            <p>Your trusted partner in financial success.</p>
+            <p>Tu entidad bancaria de confianza </p>
         </section>
-
-        <!-- Services  -->
+        <br>
+        <h3>¿Que ofrecemos?</h3>
         <section id="services">
-            <h3>Our Services</h3>
-            <p>We offer a range of financial services to meet all of your banking needs, from personal checking accounts
-                to business loans.</p>
+
+            <p>Ofrecemos multiples servicios financieros, que se ajustarán a tus necesidades, desde revisiones de
+                cuentas hasta prestamos de todo tipo.</p>
+            <ul>
+                <li><a href="services.html">¿Quieres más información?</a></li>
+            </ul>
             <!-- Add more information about services here -->
         </section>
-
-        <!-- Benefits Section -->
+        <br>
+        <h3>Beneficios</h3>
         <section id="benefits">
-            <h3>Benefits of Banking with Us</h3>
+
             <ul>
-                <li>Secure online banking</li>
-                <li>Competitive interest rates</li>
-                <li>24/7 customer support</li>
-                <!-- Add more benefits here -->
+                <li>Seguridad online bancaria</li>
+                <li>Interés bancarios competitivos</li>
+                <li>Atención Personalizada </li>
+                <li><a href="benefits.html">¿Quieres saber más sobre nuestros beneficios?</a></li>
             </ul>
         </section>
+        <br>
 
-        <!-- Testimonios -->
         <section id="testimonials" class="testimonials">
             <h3>Testimonios de clientes</h3>
-            <blockquote>
-                <p>"I've been a customer for over a decade and have always received top-notch service from Your Bank
-                    Name."</p>
-                <cite>- Jane Doe</cite>
-            </blockquote>
+            <!-- Testimonios 4 divs en cuadradito con tarjetas con fotos.-->
+            <div class="card" style="width:40vw;">
+                <img src="fernando-alonso-aston-martin-r.jpg">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <blockquote>He sido cliente desde el primer día y seguiré siéndolo</blockquote>
+                    </h5>
+                    <p class="card-text">Frenando Culonso</p>
+                </div>
+            </div>
             <!-- Más -->
         </section>
-
+        <br>
         <!-- Sign Up -->
         <section id="signup" class="call-to-action">
             <h2>Empieza con nosotros en este momento</h2>
-            <p>Abrete una cuenta en unos sencillos pasos</p>
-            <button onclick="window.location.href='login.html'">Únete</button>
+            <p>Ábrete una cuenta en unos sencillos pasos</p>
+            <button onclick="window.location.href='register.php'">Únete</button> /
+            <button onclick="window.location.href='login.php'">Inicia Sesión</button>
         </section>
     </div>
-
+    <br>
     <footer>
         <div class="container">
-            &copy; 2024 Bank. All rights reserved.
+            &copy; 2024 Nano Banco. Todos los derechos reservados.
         </div>
     </footer>
 

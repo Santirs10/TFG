@@ -13,62 +13,62 @@
 
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script>
-        let lord = document.querySelector('.lord');
-        let pass = document.getElementById('inputPassword').value;
-        let ojo = document.getElementById('ojo');
-        function cambiarTrigger() {
-            let lordIcon = document.querySelector('.lord lord-icon');
-            lordIcon.setAttribute('trigger', 'hover');
+    let lord = document.querySelector('.lord');
+    let pass = document.getElementById('inputPassword').value;
+    let ojo = document.getElementById('ojo');
+
+    function cambiarTrigger() {
+        let lordIcon = document.querySelector('.lord lord-icon');
+        lordIcon.setAttribute('trigger', 'hover');
+    }
+
+    function hover2() {
+        let lordIcon = document.querySelector('.lord lord-icon');
+        lordIcon.setAttribute('trigger', 'hover');
+        lordIcon.setAttribute('state', 'in');
+    }
+
+    function validarDNI() {
+        let dniInput = document.getElementById('inputDNI').value;
+        let letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+        let numeroDNI = dniInput.substring(0, 8);
+        let letraDNI = dniInput.substring(8).toUpperCase();
+
+        if (numeroDNI.length !== 8 || letraDNI.length !== 1) {
+            alert("Longitud de DNI incorrecta")
+            return false; // Longitud incorrecta
         }
 
-        function hover2() {
-            let lordIcon = document.querySelector('.lord lord-icon');
-            lordIcon.setAttribute('trigger', 'hover');
-            lordIcon.setAttribute('state', 'in');
+        let letraCalculada = letras[numeroDNI % 23];
+
+        if (letraDNI !== letraCalculada) {
+            alert("Escribe el DNI correcto")
+            return false
+        };
+    }
+
+    function comprobarDNI() {
+        dniInput = document.getElementById('inputDNI').value;
+        if (validarDNI()) {
+            alert('El DNI es válido.');
+        } else {
+            alert('El DNI no es válido.');
         }
+    }
 
-        function validarDNI() {
-            let dniInput = document.getElementById('inputDNI').value;
-            let letras = "TRWAGMYFPDXBNJZSQVHLCKE";
-            let numeroDNI = dniInput.substring(0, 8);
-            let letraDNI = dniInput.substring(8).toUpperCase();
-
-            if (numeroDNI.length !== 8 || letraDNI.length !== 1) {
-                alert("Longitud de DNI incorrecta")
-                return false; // Longitud incorrecta
-            }
-
-            let letraCalculada = letras[numeroDNI % 23];
-           
-            if( letraDNI !== letraCalculada){
-                alert("Escribe el DNI correcto")
-                return false
-            };
+    function MostrarContraseña() {
+        if (inputPassword.type == "password") {
+            inputPassword.type = "text";
+        } else {
+            inputPassword.type = "password";
         }
-
-        function comprobarDNI() {
-            dniInput = document.getElementById('inputDNI').value;
-            if (validarDNI()) {
-                alert('El DNI es válido.');
-            } else {
-                alert('El DNI no es válido.');
-            }
-        }
-
-        function MostrarContraseña() {
-            if (inputPassword.type == "password") {
-                inputPassword.type = "text";
-            } else {
-                inputPassword.type = "password";
-            }
-        }
-
+    }
     </script>
 </head>
 
 <body>
 
-    <div class="container" >
+    <div class="container">
         <div class="column d-flex">
             <div class="lord" onmouseenter="hover2()" onclick="window.location.href='index.html'">
                 <lord-icon src="https://cdn.lordicon.com/kkiecexg.json" trigger="in" delay="300" stroke="bold"
@@ -77,7 +77,7 @@
             </div>
             <h1>Inicio de sesión</h1>
         </div>
-        <form class="formulario" action="login.php" method="POST" onsubmit="return validarDNI()" >
+        <form class="formulario" action="login.php" method="POST" onsubmit="return validarDNI()">
             <div>
                 <script src="https://cdn.lordicon.com/lordicon.js"></script>
                 <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="click"
@@ -97,7 +97,7 @@
                 <label for="inputPassword" class="col-sm-2 col-form-label">Clave de Acceso</label>
                 <div class="col-sm-8">
                     <input type="password" class="form-control" name="CLAVE" id="inputPassword"
-                        placeholder="Clave de acceso" required >
+                        placeholder="Clave de acceso" required>
                 </div>
                 <div class="col-sm-2">
                     <img src="icono.ojo.png" class="icon" height="50vh" width="50vw" id="ojo"
@@ -135,7 +135,7 @@
         // Comprobar si la consulta devolvió algún resultado
         if ($result->num_rows > 0) {
             // Si hay resultados, redirigir a otra página
-            echo "<meta http-equiv='refresh' content='0; url=index.html'>";
+            echo "<meta http-equiv='refresh' content='0; url=https://google.es'>";
             exit();
         } else {
             // Si no hay resultados, mostrar un mensaje de error
@@ -155,7 +155,7 @@
 ?>
             <div class="nocuenta">
                 ¿No tienes cuenta? <a href="register.php">Regístrate</a>
-                
+
             </div>
         </form>
 
