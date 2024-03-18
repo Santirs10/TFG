@@ -22,15 +22,26 @@
         }
         
         // Consulta SQL para buscar en la base de datos
-        $sql = "SELECT * FROM cliente WHERE dni_cliente='$dni' AND clave='$clave'";
+        $sql = "SELECT * FROM cliente WHERE dni_cliente='$dni'";
         $result = $conn->query($sql);
         
         // Comprobar si la consulta devolvió algún resultado
         if ($result->num_rows > 0) {
             // Si hay resultados, redirigir a otra página
             $_SESSION['dni'] = $dni;
-            echo "<meta http-equiv='refresh' content='0; url=user.php'>";
-            exit();
+            $fila = $result->fetch_assoc();
+            $clave_almacenada_encriptada = $fila["clave"];
+            
+            // Verificar si las contraseñas coinciden
+            if (password_verify($clave, $clave_almacenada_encriptada)) {
+                // La contraseña es correcta
+                echo "<meta http-equiv='refresh' content='0; url=user.php'>";
+                exit();
+            } else {
+                // La contraseña no coincide
+                echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
+            }
+
         } else {
             // Si no hay resultados, mostrar un mensaje de error
             echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";

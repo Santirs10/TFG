@@ -190,58 +190,57 @@
             </div>
             <button type="submit" class="btn btn-info button" onclick="ComprobarContraseña()">Únete</button>
             <?php
-            error_reporting(E_ALL);
-    // Verificar si se ha enviado el formulario
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Recuperar datos del formulario
-        $ipUsuario = $_SERVER['REMOTE_ADDR'];
-        $DNI = $_POST["DNI"];
-        $NOMBRE = $_POST["Nombre"];
-        $APELLIDO1 = $_POST["Apellido1"];
-        $APELLIDO2 = $_POST["Apellido2"];
-        $DIRECCION = $_POST["Direccion"];
-        $EMAIL = $_POST["email"];
-        $CLAVE = password_hash($_POST["CLAVE_CLARO"], PASSWORD_BCRYPT); // Hash de la contraseña, no aplicada aún
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recuperar datos del formulario
+    $ipUsuario = $_SERVER['REMOTE_ADDR'];
+    $DNI = $_POST["DNI"];
+    $NOMBRE = $_POST["Nombre"];
+    $APELLIDO1 = $_POST["Apellido1"];
+    $APELLIDO2 = $_POST["Apellido2"];
+    $DIRECCION = $_POST["Direccion"];
+    $EMAIL = $_POST["email"];
+    $CLAVE = password_hash($_POST["CLAVE_CLARO"], PASSWORD_BCRYPT); // Hash de la contraseña, no aplicada aún
 
-        $CLAVE_CL = $_POST["CLAVE_CLARO"]; //Contraseña en claro, pendiente de cambio
-        echo " <br>IP: ";
-        echo $ipUsuario;
-        // Conectar a la base de datos (ajusta según tu configuración)
-        try {
+    $CLAVE_CL = $_POST["CLAVE_CLARO"]; // Contraseña en claro, pendiente de cambio
+    echo " <br>IP: ";
+    echo $ipUsuario;
+    // Conectar a la base de datos (ajusta según tu configuración)
+    try {
         $conn = new mysqli("localhost", "root", "ADMIN23", "banco_sv");
         // Verificar la conexión
         if ($conn->connect_error) {
-            throw new Exception();
+            throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
         }
-        // Insertar datos en la tabla
-        $sql = "INSERT INTO cliente (dni_cliente, email, clave,nombre,apellido1,apellido2,direccion) VALUES ('$DNI', '$EMAIL', '$CLAVE_CL','$NOMBRE','$APELLIDO1','$APELLIDO2','$DIRECCION')";
+
+        // Verificar si el DNI ya existe en la base de datos
         $check_query = "SELECT COUNT(*) AS count FROM cliente WHERE dni_cliente = '$DNI'";
         $check_result = $conn->query($check_query);
         if ($check_result && $check_result->num_rows > 0) {
             $row = $check_result->fetch_assoc();
             if ($row['count'] > 0) {
-                echo "<p style='color: red;'>Ya existe un cliente con ese DNI, <a href='login.php'>inicia sesión </a>utiliza un DNI válido.</p>";
+                echo "<p style='color: red;'>Ya existe un cliente con ese DNI en nuestra base de datos.<a href='login.php'>Inicia sesión</a> con un DNI válido</p>";
                 exit(); // Salir del script si ya existe un cliente con ese DNI
             }
-            else{
-                echo "<p>Registro exitoso. Ahora puedes <a href='login.php'>iniciar sesión</a>.</p>";
-            }
         }
+
+        // Insertar datos en la tabla
+        $sql = "INSERT INTO cliente (dni_cliente, email, clave, nombre, apellido1, apellido2, direccion) VALUES ('$DNI', '$EMAIL', '$CLAVE','$NOMBRE','$APELLIDO1','$APELLIDO2','$DIRECCION')";
+        if ($conn->query($sql) === TRUE) {  
+            echo "<p>Registro exitoso. Ahora puedes <a href='login.php'>iniciar sesión</a>.</p>";
+        } else {
+            echo "Error al ejecutar la consulta: " . $conn->error;
+        }
+        
         // Cerrar conexión
         $conn->close();
     } catch (Exception $e) {
-        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
-            // Mensaje personalizado para el error de entrada duplicada
-            echo "<p style='color: red;'>Ya existe un cliente con ese DNI en nuestra base de datos.</p>";
-        } else {
-            // Otro tipo de error
-            echo "<p style='color: red;'>Se produjo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.</p>";
-        }
+        // Si hay algún otro error, manejarlo aquí
+        echo "<p style='color: red;'>Se produjo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.</p>";
     }
-        // Capturar la excepción y mostrar un mensaje personalizado
-        
-    }
-    ?>
+}
+?>
+
             <div class="nocuenta">
                 ¿Ya tienes cuenta? <a href="login.php">Inicia Sesión</a>
             </div>
