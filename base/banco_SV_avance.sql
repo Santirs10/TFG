@@ -4,11 +4,13 @@ use banco_sv;
 create table cliente (
 dni_cliente varchar (9),
 id_cliente int auto_increment,
+clave varchar (60),
 nombre varchar (20),
 apellido1 varchar (20),
 apellido2 varchar (20),
 direccion varchar (60),
-num_telefono varchar (11), 
+num_telefono varchar (11),
+email varchar (50), 
 primary key (dni_cliente),
 unique key (id_cliente)
 );
@@ -16,11 +18,13 @@ unique key (id_cliente)
 create table empleado (
 dni_empleado varchar (9),
 id_empleado int auto_increment,
-nombre varchar (20),
-apellido1 varchar (20),
-apellido2 varchar (20),
-direccion varchar (60),
-num_telefono varchar (11), 
+clave_e varchar (60),
+nombre_e varchar (20),
+apellido1_e varchar (20),
+apellido2_e varchar (20),
+direccion_e varchar (60),
+num_telefono_e varchar (11), 
+email_e varchar (50), 
 primary key (dni_empleado),
 unique key (id_empleado)
 );
