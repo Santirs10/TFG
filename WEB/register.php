@@ -98,7 +98,8 @@
             }
         } else {
             alert(
-                "La contraseña tiene que ser de mínimo 8 caracteres y tener mayúsculas, minúsculas y caracteres especiales")
+                "La contraseña tiene que ser de mínimo 8 caracteres y tener mayúsculas, minúsculas y caracteres especiales"
+            )
         }
     }
     </script>
@@ -138,6 +139,33 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Introduzca su Nombre</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputNombre" name="Nombre" placeholder="Nombre"
+                        required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Introduzca su Dirección</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputDireccion" name="Direccion"
+                        placeholder="C/ Ejemplo" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Introduzca su primer Apellido</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputAp1" name="Apellido1" placeholder="Apellido"
+                        required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Introduzca el segundo apellido</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputAp2" name="Apellido2" placeholder="Apellido2">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label for="inputPassword" class="col-sm-2 col-form-label">Clave de Acceso</label>
                 <div class="col-sm-8">
                     <input type="password" class="form-control" id="inputPassword" name="CLAVE_CLARO"
@@ -162,43 +190,56 @@
             </div>
             <button type="submit" class="btn btn-info button" onclick="ComprobarContraseña()">Únete</button>
             <?php
-            error_reporting(0);
+            error_reporting(E_ALL);
     // Verificar si se ha enviado el formulario
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Recuperar datos del formulario
         $ipUsuario = $_SERVER['REMOTE_ADDR'];
         $DNI = $_POST["DNI"];
+        $NOMBRE = $_POST["Nombre"];
+        $APELLIDO1 = $_POST["Apellido1"];
+        $APELLIDO2 = $_POST["Apellido2"];
+        $DIRECCION = $_POST["Direccion"];
         $EMAIL = $_POST["email"];
-        $CLAVE = password_hash($_POST["CLAVE_CLARO"], PASSWORD_BCRYPT); // Hash de la contraseña
+        $CLAVE = password_hash($_POST["CLAVE_CLARO"], PASSWORD_BCRYPT); // Hash de la contraseña, no aplicada aún
 
-        $CLAVE_CL = $_POST["CLAVE_CLARO"];
+        $CLAVE_CL = $_POST["CLAVE_CLARO"]; //Contraseña en claro, pendiente de cambio
         echo " <br>IP: ";
         echo $ipUsuario;
         // Conectar a la base de datos (ajusta según tu configuración)
         try {
-        $conn = new mysqli("localhost", "root", "ADMIN23", "world");
-
+        $conn = new mysqli("localhost", "root", "ADMIN23", "banco_sv");
         // Verificar la conexión
         if ($conn->connect_error) {
             throw new Exception();
         }
-
         // Insertar datos en la tabla
-        $sql = "INSERT INTO usuarios (DNI, EMAIL, CLAVE) VALUES ('$DNI', '$EMAIL', '$CLAVE_CL')";
-        $sql = "commit;";
-        if ($conn->query($sql) === TRUE) {
-            echo "<p>Registro exitoso. Ahora puedes <a href='login.php'>iniciar sesión</a>.</p>";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+        $sql = "INSERT INTO cliente (dni_cliente, email, clave,nombre,apellido1,apellido2,direccion) VALUES ('$DNI', '$EMAIL', '$CLAVE_CL','$NOMBRE','$APELLIDO1','$APELLIDO2','$DIRECCION')";
+        $check_query = "SELECT COUNT(*) AS count FROM cliente WHERE dni_cliente = '$DNI'";
+        $check_result = $conn->query($check_query);
+        if ($check_result && $check_result->num_rows > 0) {
+            $row = $check_result->fetch_assoc();
+            if ($row['count'] > 0) {
+                echo "<p style='color: red;'>Ya existe un cliente con ese DNI, <a href='login.php'>inicia sesión </a>utiliza un DNI válido.</p>";
+                exit(); // Salir del script si ya existe un cliente con ese DNI
+            }
+            else{
+                echo "<p>Registro exitoso. Ahora puedes <a href='login.php'>iniciar sesión</a>.</p>";
+            }
         }
-
         // Cerrar conexión
         $conn->close();
     } catch (Exception $e) {
-        // Capturar la excepción y mostrar un mensaje personalizado
-        echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
-        
+        if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+            // Mensaje personalizado para el error de entrada duplicada
+            echo "<p style='color: red;'>Ya existe un cliente con ese DNI en nuestra base de datos.</p>";
+        } else {
+            // Otro tipo de error
+            echo "<p style='color: red;'>Se produjo un error al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.</p>";
+        }
     }
+        // Capturar la excepción y mostrar un mensaje personalizado
+        
     }
     ?>
             <div class="nocuenta">

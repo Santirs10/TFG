@@ -1,3 +1,52 @@
+<?php
+            error_reporting(E_ALL);
+            session_start();
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recuperar credenciales del formulario
+                $dni = $_POST["DNI"];
+                $clave = $_POST["CLAVE"];
+                
+    // Datos de conexión
+                $servername = "127.0.0.1";  // Nombre del servidor (IP)
+                $database = "banco_sv";  // Nombre de la base de datos (Use world)
+                $username = "root";   // Nombre de usuario de MySQL (usuario que solo pueda leer)
+                $password = "ADMIN23";   // Contraseña de MySQL cambiada
+            try {
+        // Crear conexión
+                $conn = new mysqli($servername, $username, $password, $database);
+        
+        // Comprobar la conexión
+        if ($conn->connect_error) {
+            // Si la conexión falla, lanzar una excepción personalizada
+            throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
+        }
+        
+        // Consulta SQL para buscar en la base de datos
+        $sql = "SELECT * FROM cliente WHERE dni_cliente='$dni' AND clave='$clave'";
+        $result = $conn->query($sql);
+        
+        // Comprobar si la consulta devolvió algún resultado
+        if ($result->num_rows > 0) {
+            // Si hay resultados, redirigir a otra página
+            $_SESSION['dni'] = $dni;
+            echo "<meta http-equiv='refresh' content='0; url=user.php'>";
+            exit();
+        } else {
+            // Si no hay resultados, mostrar un mensaje de error
+            echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
+        }
+        if ($conn) {
+            $conn->close();
+        }
+    } catch (Exception $e) {
+        //Mostrar un mensaje personalizado de error
+        echo "<p style='color: red;'>" . $e->getMessage() . "</p>";
+    }
+    
+    // Cerrar conexión
+
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -106,53 +155,7 @@
 
             </div>
             <button type="submit" class="btn btn-info button">Iniciar Sesión</button>
-            <?php
-            error_reporting(0);
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recuperar credenciales del formulario
-                $dni = $_POST["DNI"];
-                $clave = $_POST["CLAVE"];
-                
-    // Datos de conexión
-                $servername = "127.0.0.1";  // Nombre del servidor (IP)
-                $database = "world";  // Nombre de la base de datos (Use world)
-                $username = "root";   // Nombre de usuario de MySQL (usuario que solo pueda leer)
-                $password = "ADMIN23";   // Contraseña de MySQL cambiada
-            try {
-        // Crear conexión
-                $conn = new mysqli($servername, $username, $password, $database);
-        
-        // Comprobar la conexión
-        if ($conn->connect_error) {
-            // Si la conexión falla, lanzar una excepción personalizada
-            throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
-        }
-        
-        // Consulta SQL para buscar en la base de datos
-        $sql = "SELECT * FROM usuarios WHERE DNI='$dni' AND CLAVE='$clave'";
-        $result = $conn->query($sql);
-        
-        // Comprobar si la consulta devolvió algún resultado
-        if ($result->num_rows > 0) {
-            // Si hay resultados, redirigir a otra página
-            echo "<meta http-equiv='refresh' content='0; url=https://google.es'>";
-            exit();
-        } else {
-            // Si no hay resultados, mostrar un mensaje de error
-            echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
-        }
-        if ($conn) {
-            $conn->close();
-        }
-    } catch (Exception $e) {
-        //Mostrar un mensaje personalizado de error
-        echo "<p style='color: red;'>" . $e->getMessage() . "</p>";
-    }
-    
-    // Cerrar conexión
-
-}
-?>
+           
             <div class="nocuenta">
                 ¿No tienes cuenta? <a href="register.php">Regístrate</a>
 
