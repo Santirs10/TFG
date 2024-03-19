@@ -207,7 +207,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $ipUsuario;
     // Conectar a la base de datos (ajusta según tu configuración)
     try {
-        $conn = new mysqli("localhost", "root", "ADMIN23", "banco_sv");
+        
+        $conn = new mysqli("192.168.128.143", "webadmin", "2Q_hyTd2", "banco_sv");
         // Verificar la conexión
         if ($conn->connect_error) {
             throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");

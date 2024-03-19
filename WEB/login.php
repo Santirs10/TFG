@@ -7,12 +7,13 @@
                 $clave = $_POST["CLAVE"];
                 
     // Datos de conexión
-                $servername = "127.0.0.1";  // Nombre del servidor (IP)
+                $servername = "198.128.168.143";  // Nombre del servidor (IP)
                 $database = "banco_sv";  // Nombre de la base de datos (Use world)
-                $username = "root";   // Nombre de usuario de MySQL (usuario que solo pueda leer)
-                $password = "ADMIN23";   // Contraseña de MySQL cambiada
+                $username = "webadmin";  // Nombre de usuario de MySQL (usuario que solo pueda leer)
+                $password = "2Q_hyTd2";  // Contraseña de MySQL cambiada
             try {
-        // Crear conexión
+        //--Falta hacer commit, o solucionar error ->
+        /*--Warning: mysqli::__construct(): (HY000/2002): Se produjo un error durante el intento de conexión ya que la parte conectada no respondió adecuadamente tras un periodo de tiempo, o bien se produjo un error en la conexión establecida ya que el host conectado no ha podido responder. in C:\xampp\htdocs\WEB\login.php on line 16*/
                 $conn = new mysqli($servername, $username, $password, $database);
         
         // Comprobar la conexión
