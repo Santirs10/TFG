@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// Eliminar todas las variables de sesiÃ³n
+// Eliminar todas las variables de sesión
 session_unset();
 
-// Destruir la sesiÃ³n
+// Destruir la sesión
 session_destroy();
 
-// Redirigir al usuario al formulario de inicio de sesiÃ³n
+// Redirigir al usuario al formulario de inicio de sesión
 header("Location: index.html");
 exit();
 ?>

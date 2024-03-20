@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -166,6 +166,12 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Introduzca un número de teléfono</label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" id="inputTLF" name="Tlf" placeholder="+34">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label for="inputPassword" class="col-sm-2 col-form-label">Clave de Acceso</label>
                 <div class="col-sm-8">
                     <input type="password" class="form-control" id="inputPassword" name="CLAVE_CLARO"
@@ -200,9 +206,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $APELLIDO2 = $_POST["Apellido2"];
     $DIRECCION = $_POST["Direccion"];
     $EMAIL = $_POST["email"];
-    $CLAVE = password_hash($_POST["CLAVE_CLARO"], PASSWORD_BCRYPT); // Hash de la contraseña, no aplicada aún
 
-    $CLAVE_CL = $_POST["CLAVE_CLARO"]; // Contraseña en claro, pendiente de cambio
+    $NUM_TLF= $_POST["Tlf"];
+
+    $CLAVE_CL = $_POST["CLAVE_CLARO"]; // Contraseña que se encripta en mysql
     echo " <br>IP: ";
     echo $ipUsuario;
     // Conectar a la base de datos (ajusta según tu configuración)
@@ -215,7 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Verificar si el DNI ya existe en la base de datos
-        $check_query = "SELECT COUNT(*) AS count FROM cliente WHERE dni_cliente = '$DNI'";
+        $check_query = "SELECT COUNT(*) AS count FROM clientes WHERE dni_cliente = '$DNI'";
         $check_result = $conn->query($check_query);
         if ($check_result && $check_result->num_rows > 0) {
             $row = $check_result->fetch_assoc();
@@ -226,7 +233,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Insertar datos en la tabla
-        $sql = "INSERT INTO cliente (dni_cliente, email, clave, nombre, apellido1, apellido2, direccion) VALUES ('$DNI', '$EMAIL', '$CLAVE','$NOMBRE','$APELLIDO1','$APELLIDO2','$DIRECCION')";
+        $sql = "INSERT INTO clientes (dni_cliente, email, clave, nombre, apellido1, apellido2, direccion,num_telefono) VALUES ('$DNI', '$EMAIL', aes_encrypt('$CLAVE_CL','password'),'$NOMBRE','$APELLIDO1','$APELLIDO2','$DIRECCION','$NUM_TLF')";
         if ($conn->query($sql) === TRUE) {  
             echo "<p>Registro exitoso. Ahora puedes <a href='login.php'>iniciar sesión</a>.</p>";
         } else {
@@ -243,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
             <div class="nocuenta">
-                ¿Ya tienes cuenta? <a href="login.php">Inicia Sesión</a>
+                ¿Ya tienes cuenta? 2<a href="login.php">Inicia Sesión</a>
             </div>
         </form>
 

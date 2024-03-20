@@ -11,11 +11,10 @@
                 $database = "banco_sv";  // Nombre de la base de datos (Use world)
                 $username = "webadmin";  // Nombre de usuario de MySQL (usuario que solo pueda leer)
                 $password = "2Q_hyTd2";  // Contraseña de MySQL cambiada
+                $PassVerify=FALSE;
             try {
-        //--Falta hacer commit, o solucionar error ->
-        /*--Warning: mysqli::__construct(): (HY000/2002): Se produjo un error durante el intento de conexión ya que la parte conectada no respondió adecuadamente tras un periodo de tiempo, o bien se produjo un error en la conexión establecida ya que el host conectado no ha podido responder. in C:\xampp\htdocs\WEB\login.php on line 16*/
-                $conn = new mysqli($servername, $username, $password, $database);
-        
+        $conn = new mysqli("192.168.128.143", "webadmin", "2Q_hyTd2", "banco_sv");
+
         // Comprobar la conexión
         if ($conn->connect_error) {
             // Si la conexión falla, lanzar una excepción personalizada
@@ -23,29 +22,31 @@
         }
         
         // Consulta SQL para buscar en la base de datos
-        $sql = "SELECT * FROM cliente WHERE dni_cliente='$dni'";
+        $sql = "SELECT * FROM clientes WHERE dni_cliente='$dni' ";
         $result = $conn->query($sql);
-        
         // Comprobar si la consulta devolvió algún resultado
         if ($result->num_rows > 0) {
             // Si hay resultados, redirigir a otra página
-            $_SESSION['dni'] = $dni;
             $fila = $result->fetch_assoc();
-            $clave_almacenada_encriptada = $fila["clave"];
+            $clave_almacenada = $fila["clave"];
             
-            // Verificar si las contraseñas coinciden
-            if (password_verify($clave, $clave_almacenada_encriptada)) {
-                // La contraseña es correcta
-                echo "<meta http-equiv='refresh' content='0; url=user.php'>";
-                exit();
-            } else {
-                // La contraseña no coincide
-                echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
-            }
-
         } else {
             // Si no hay resultados, mostrar un mensaje de error
-            echo "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
+            $error= "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
+        }
+        
+        $sql = "SELECT * FROM clientes WHERE dni_cliente='$dni'AND aes_decrypt('$clave_almacenada','password')='$clave'";
+        $result = $conn->query($sql);
+        echo $sql;
+        //La consulta no devuelve nada cuando intentas inyeccion SQL
+        if ($result->num_rows > 0) {  
+            $_SESSION['dni'] = $dni;
+            echo "<meta http-equiv='refresh' content='0; url=user.php'>";
+            exit();
+        }
+        else{
+             
+            $error= "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
         }
         if ($conn) {
             $conn->close();
@@ -60,7 +61,7 @@
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -138,7 +139,7 @@
             </div>
             <h1>Inicio de sesión</h1>
         </div>
-        <form class="formulario" action="login.php" method="POST" onsubmit="return validarDNI()">
+        <form class="formulario" action="login.php" method="POST">
             <div>
                 <script src="https://cdn.lordicon.com/lordicon.js"></script>
                 <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="click"
@@ -167,9 +168,9 @@
 
             </div>
             <button type="submit" class="btn btn-info button">Iniciar Sesión</button>
-           
+            <?php  echo $error ?>
             <div class="nocuenta">
-                ¿No tienes cuenta? <a href="register.php">Regístrate</a>
+                ¿No tienes cuenta?<a href="register.php">Regístrate</a>
 
             </div>
         </form>
