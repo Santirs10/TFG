@@ -11,9 +11,11 @@ if (!isset($_SESSION['dni'])) {
 // Recuperar la información del usuario de la sesión
 $dni = $_SESSION['dni'];
  // Asegúrate de almacenar esta información en la sesión al autenticar al usuario
-
-// Aquí puedes agregar más información del usuario que desees mostrar en la página de perfil
-$conn = new mysqli("192.168.128.143", "webadmin", "2Q_hyTd2", "banco_sv");
+?>
+<?php
+// Aquí puedes agregar más información del usuario que desees mostrar en la página de perfil 
+/*
+$conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
 
 // Comprobar la conexión
 if ($conn->connect_error) {
@@ -33,30 +35,31 @@ if ($resultado->num_rows > 0) {
 } else {
     echo "<p style='color:red;'>Error.</p>";
 }
-// Tabla Cuenta
-$sql = "SELECT * FROM cuenta where dni_c='$dni'";
-$resultado = $conn->query($sql);
-if ($resultado->num_rows > 0) {
-    while($fila = $resultado->fetch_assoc()) {
-        echo "ID Cuenta: " . $fila["id_cuenta"] . "<br>";
-        $id_cuenta = $fila["id_cuenta"];
-        echo "DNI Cliente: " . $fila["dni_c"] . "<br>";
-        echo "Tipo de cuenta: " . $fila["tipo_cuenta"] . "<br>";
-        $tipo_c=$fila["tipo_cuenta"];
-        echo "Saldo: " . $fila["saldo"] . "<br>";
-        $saldo=$fila["saldo"];
-        echo "Fecha de apertura: " . $fila["fecha_apertura"] . "<br>";
-        echo "Fecha de cierre: " . $fila["fecha_cierre"] . "<br>";
-        echo "Tipo de interés: " . $fila["tipo_interes"] . "<br>";
-        echo "Límite de retiro: " . $fila["limite_retiro"] . "<br>";
-        echo "Estado de cuenta: " . $fila["estado_cuenta"] . "<br>";
-        echo "<br>";
-    }
-} else {
-    echo "No tienes una cuenta asociada.";
-}
+// Tabla Cuenta Cambiar consulta con foreign key
+//$sql = "SELECT * FROM cuenta where dni_c='$dni'";
+//$resultado = $conn->query($sql);
+//if ($resultado->num_rows > 0) {
+//    while($fila = $resultado->fetch_assoc()) {
+//        echo "ID Cuenta: " . $fila["id_cuenta"] . "<br>";
+//        $id_cuenta = $fila["id_cuenta"];
+//        echo "DNI Cliente: " . $fila["dni_c"] . "<br>";
+//        echo "Tipo de cuenta: " . $fila["tipo_cuenta"] . "<br>";
+//        $tipo_c=$fila["tipo_cuenta"];
+//        echo "Saldo: " . $fila["saldo"] . "<br>";
+//        $saldo=$fila["saldo"];
+//        echo "Fecha de apertura: " . $fila["fecha_apertura"] . "<br>";
+//        echo "Fecha de cierre: " . $fila["fecha_cierre"] . "<br>";
+//        echo "Tipo de interés: " . $fila["tipo_interes"] . "<br>";
+//        echo "Límite de retiro: " . $fila["limite_retiro"] . "<br>";
+//        echo "Estado de cuenta: " . $fila["estado_cuenta"] . "<br>";
+//        echo "<br>";
+//    }
+//} else {
+//    echo "No tienes una cuenta asociada.";
+//}
 
-$conn->close();
+$conn->close(); 
+*/
 ?>
 
 <!DOCTYPE html>
@@ -78,17 +81,38 @@ $conn->close();
     <header>
         <div class="container">
             <h1>Bienvenido
-                <?php echo $Nombre ?>
+            <?php
+// Aquí puedes agregar más información del usuario que desees mostrar en la página de perfil
+$conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
+
+// Comprobar la conexión
+if ($conn->connect_error) {
+    // Si la conexión falla, lanzar una excepción personalizada
+    throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
+}
+// Tabla cliente.
+    $sql = "SELECT * FROM clientes where dni_cliente='$dni'";
+    $resultado = $conn->query($sql);
+
+
+if ($resultado->num_rows > 0) {
+    while($fila = $resultado->fetch_assoc()) {
+        echo $fila["nombre"] . "<br>";
+        $Nombre= $fila["nombre"];
+    }
+} else {
+    echo "<p style='color:red;'>Error.</p>";
+}
+
+$conn->close();
+?>
             </h1>
-            <p>Tu DNI es:
-                <?php echo $dni; ?>
-            </p>
+            <?php
+            echo "<p>Tu DNI es: " . $dni . "</p>"       ?>
             <!-- Otros detalles del perfil -->
             <nav>
                 <ul>
-                    <li><a href="user.php">Inicio</a></li>
-
-                    <li><a href="logout.php" style="float: rigth;">Cerrar sesión</a></li>
+                    <li><a href="logout.php" style="float: right;">Cerrar sesión</a></li>
                 </ul>
             </nav>
         </div>

@@ -1,5 +1,5 @@
 <?php
-            error_reporting(E_ALL);
+            error_reporting(0);
             session_start();
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recuperar credenciales del formulario
@@ -13,7 +13,7 @@
                 $password = "2Q_hyTd2";  // Contraseña de MySQL cambiada
                 $PassVerify=FALSE;
             try {
-        $conn = new mysqli("192.168.128.143", "webadmin", "2Q_hyTd2", "banco_sv");
+        $conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
 
         // Comprobar la conexión
         if ($conn->connect_error) {
@@ -28,14 +28,22 @@
         if ($result->num_rows > 0) {
             // Si hay resultados, redirigir a otra página
             $fila = $result->fetch_assoc();
-            $clave_almacenada = $fila["clave"];
+            $clave_almacenada_encriptada = $fila["clave"];
+            
             
         } else {
             // Si no hay resultados, mostrar un mensaje de error
             $error= "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
         }
-        
-        $sql = "SELECT * FROM clientes WHERE dni_cliente='$dni'AND aes_decrypt('$clave_almacenada','password')='$clave'";
+        $user_clave = "SELECT aes_decrypt('$clave_almacenada_encriptada','password') as clave_clara FROM clientes where dni_cliente= '$dni'" ;
+        $resultado = $conn->query($user_clave);
+
+        if ($resultado->num_rows > 0) {
+            while($fila_sql = $resultado->fetch_assoc()) {
+                $sql_clave= $fila_sql["clave_clara"];
+            }
+        }
+        $sql = "SELECT * FROM clientes WHERE dni_cliente='$dni'AND '$sql_clave' = '$clave'";
         $result = $conn->query($sql);
         echo $sql;
         //La consulta no devuelve nada cuando intentas inyeccion SQL
@@ -45,8 +53,7 @@
             exit();
         }
         else{
-             
-            $error= "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
+            $error = "<p style='color: red;'>Credenciales incorrectas. Por favor, inténtalo de nuevo.</p>";
         }
         if ($conn) {
             $conn->close();

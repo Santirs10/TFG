@@ -13,7 +13,7 @@ $dni = $_SESSION['dni'];
  // Asegúrate de almacenar esta información en la sesión al autenticar al usuario
 
 // Aquí puedes agregar más información del usuario que desees mostrar en la página de perfil
-$conn = new mysqli("192.168.128.143", "webadmin", "2Q_hyTd2", "banco_sv");
+$conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
 
 // Comprobar la conexión
 if ($conn->connect_error) {
