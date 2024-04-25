@@ -213,7 +213,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $ipUsuario;
     // Conectar a la base de datos (ajusta según tu configuración)
     try {
-        
         $conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
         // Verificar la conexión
         if ($conn->connect_error) {

@@ -1,13 +1,41 @@
 <?php
 session_start();
+// Establecer conexi贸n a la base de datos
+$conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
 
-// Eliminar todas las variables de sesi髇
+// Comprobar la conexi贸n
+if ($conn->connect_error) {
+    // Si la conexi贸n falla, lanzar una excepci贸n personalizada
+    throw new Exception("No se pudo conectar a la base de datos. Por favor, int茅ntalo de nuevo m谩s tarde.");
+}
+
+// Iniciar sesi贸n en PHP (si no se ha iniciado ya)
+
+// Obtener el DNI de la sesi贸n PHP
+$dni_cliente = $_SESSION['dni']; // Aseg煤rate de que 'dni' sea la clave correcta de tu sesi贸n
+
+// Obtener la fecha actual
+$fecha_fin = date("Y-m-d H:i:s"); // Formato: A帽o-Mes-D铆a Hora:Minutos:Segundos
+
+// Consulta para insertar los datos en la tabla sesiones
+$sql_insertar_sesion = "INSERT INTO sesiones (dni_cliente, fecha_fin) VALUES ('$dni_cliente', '$fecha_fin')";
+
+// Ejecutar la consulta
+if ($conn->query($sql_insertar_sesion) === TRUE) {
+    echo "La sesi贸n se ha registrado correctamente.";
+} else {
+    echo "Error al registrar la sesi贸n: " . $conn->error;
+}
+
+// Cerrar la conexi贸n
+$conn->close();
+
+// Hacer insert into sesiones cogiendo la fecha para meterlo en fecha fin, y con el dni 
+
+// Eliminar todas las variables de sesi锟絥
 session_unset();
-
-// Destruir la sesi髇
+// Destruir la sesi锟絥
 session_destroy();
-
-// Redirigir al usuario al formulario de inicio de sesi髇
 header("Location: index.html");
 exit();
 ?>

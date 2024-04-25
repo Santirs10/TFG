@@ -5,13 +5,6 @@
     // Recuperar credenciales del formulario
                 $dni = $_POST["DNI"];
                 $clave = $_POST["CLAVE"];
-                
-    // Datos de conexión
-                $servername = "198.128.168.143";  // Nombre del servidor (IP)
-                $database = "banco_sv";  // Nombre de la base de datos (Use world)
-                $username = "webadmin";  // Nombre de usuario de MySQL (usuario que solo pueda leer)
-                $password = "2Q_hyTd2";  // Contraseña de MySQL cambiada
-                $PassVerify=FALSE;
             try {
         $conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
 
@@ -49,6 +42,7 @@
         //La consulta no devuelve nada cuando intentas inyeccion SQL
         if ($result->num_rows > 0) {  
             $_SESSION['dni'] = $dni;
+            //Hora del sistema para hacer un insert en sesiones
             echo "<meta http-equiv='refresh' content='0; url=user.php'>";
             exit();
         }
