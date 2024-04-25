@@ -90,7 +90,7 @@ $conn->close();
         </div>
         <div class="cuentas">
             <h2>Cuentas: <?php 
-            $conn = new mysqli("192.168.128.143", "webadmin", "2Q_hyTd2", "banco_sv");
+            $conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
             // Comprobar la conexión
             if ($conn->connect_error) {
                 // Si la conexión falla, lanzar una excepción personalizada

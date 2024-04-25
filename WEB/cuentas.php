@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting();
 session_start();
 
 // Verificar si el usuario ha iniciado sesión
@@ -25,7 +25,6 @@ if ($conn->connect_error) {
     $sql = "SELECT * FROM clientes where dni_cliente='$dni'";
     $resultado = $conn->query($sql);
 
-
 if ($resultado->num_rows > 0) {
     while($fila = $resultado->fetch_assoc()) {
         $Nombre= $fila["nombre"];
@@ -35,10 +34,10 @@ if ($resultado->num_rows > 0) {
 }
 // Tabla Cuenta
 
-$sql_saldo = "SELECT c.saldo AS saldo_total 
+$sql_saldo = "SELECT SUM(c.saldo) AS saldo_total 
               FROM cuenta c 
               JOIN titularcuenta t ON c.id_cuenta = t.id_cuenta 
-              WHERE t.dni_c = '$dni' and t.id_cuenta=";
+              WHERE t.dni_c = '$dni'";
 
 $resultado_saldo = $conn->query($sql_saldo);
 
@@ -46,10 +45,9 @@ if ($resultado_saldo->num_rows > 0) {
     // Obtenemos el saldo total
     $fila_saldo = $resultado_saldo->fetch_assoc();
     $saldo = $fila_saldo["saldo_total"];
-} else {
-    // Si no hay resultados, establecemos el saldo en cero
+} if ($saldo<=0) {
     $saldo = 0;
-}
+} 
 
 $conn->close();
 ?>
@@ -82,7 +80,6 @@ $conn->close();
             <nav>
                 <ul>
                     <li><a href="user.php">Inicio</a></li>
-
                     <li><a href="logout.php" style="float: rigth;">Cerrar sesión</a></li>
                 </ul>
             </nav>
@@ -91,11 +88,11 @@ $conn->close();
     <div class="container">
         <div class="fondos">
             <h2>Actualmente, tienes
-                <?php echo $saldo; ?>€.</h3>
+                <?php echo $saldo; ?> € entre todas tus cuentas.</h3>
                 <a href="fondos.php">Accede a tu ahorro.</a>
         </div>
         <div class="cuentas">
-            <h2> <?php echo $id_cuenta;
+            <h2> <?php 
             $conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
 
             // Comprobar la conexión
@@ -103,23 +100,32 @@ $conn->close();
                 // Si la conexión falla, lanzar una excepción personalizada
                 throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
             }
-            $sql = "SELECT * FROM cuenta where dni_c='$dni'";
+            $sql = "SELECT * FROM titularcuenta where dni_c='$dni'";
 $resultado = $conn->query($sql);
 if ($resultado->num_rows > 0) {
     while($fila = $resultado->fetch_assoc()) {
-        echo "ID Cuenta: " . $fila["id_cuenta"] . "<br>";
         $id_cuenta = $fila["id_cuenta"];
-        echo "DNI Cliente: " . $fila["dni_c"] . "<br>";
-        echo "Tipo de cuenta: " . $fila["tipo_cuenta"] . "<br>";
-        $tipo_c=$fila["tipo_cuenta"];
-        echo "Saldo: " . $fila["saldo"] . "<br>";
-        $saldo=$fila["saldo"];
-        echo "Fecha de apertura: " . $fila["fecha_apertura"] . "<br>";
-        echo "Fecha de cierre: " . $fila["fecha_cierre"] . "<br>";
-        echo "Tipo de interés: " . $fila["tipo_interes"] . "<br>";
-        echo "Límite de retiro: " . $fila["limite_retiro"] . "<br>";
-        echo "Estado de cuenta: " . $fila["estado_cuenta"] . "<br>";
+        $sql_saldo = "SELECT *
+              FROM cuenta c
+              INNER JOIN titularcuenta tc ON c.id_cuenta = tc.id_cuenta
+              WHERE c.id_cuenta = '$id_cuenta' AND tc.dni_c = '$dni'";
+
+$resultado_saldo = $conn->query($sql_saldo);
+
+if ($resultado_saldo->num_rows > 0) {
+    // Obtenemos el saldo de la cuenta deseada
+    $fila_saldo = $resultado_saldo->fetch_assoc();
+    $saldo = $fila_saldo["saldo"];
+} else {
+    // Si no se encuentra la cuenta deseada, establecemos el saldo a 0
+    $saldo = 0;
+}
+echo '<div style="width: calc(100% - 40px); max-width: 800px; margin: 20px; background-color: #add8e6; border-radius: 20px; padding: 20px; box-sizing: border-box; box-shadow: 10px 0 8px rgba(0, 0, 0, 0.1);">';        echo "ID Cuenta: " . $fila["id_cuenta"] . "<br>";
+        echo "Eres " . $fila["tipo_titularidad"] . " de la cuenta <br>";
+        echo "Tienes " . $saldo . " € en esta cuenta";
+        echo "</div>";
         echo "<br>";
+        
     }
 } else {
     echo "<p style='color: red;'>No tienes una cuenta asociada.</p>";
@@ -129,7 +135,7 @@ if ($resultado->num_rows > 0) {
         </div>
         <div class="transferencias">
             <h2>Transferencias</h2>
-            <div> ¿Quieres realizar, o solicitar alguna transferencia?</div>
+            <a href="transferencias.php">¿Quieres realizar, o solicitar alguna transferencia?</a>
         </div>
     </div>
 </body>
