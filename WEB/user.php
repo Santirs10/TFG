@@ -27,7 +27,27 @@ $dni = $_SESSION['dni'];
     <link rel="stylesheet" href="style.css">
     <title>Usuario</title>
 </head>
+<script>
+    var temporizadorInactividad;
 
+    // Función para reiniciar el temporizador de inactividad
+    function reiniciarTemporizador() {
+        clearTimeout(temporizadorInactividad);
+        temporizadorInactividad = setTimeout(function() {
+            // Redirigir al usuario a logout.php después de 1 minuto de inactividad
+            window.location.href = "logout.php";
+
+        },60000); // 1 minuto en milisegundos
+    }
+
+    // Iniciar el temporizador al cargar la página
+    reiniciarTemporizador();
+
+    // Agregar escuchadores de eventos para reiniciar el temporizador en diferentes acciones del usuario
+    document.addEventListener("mousemove", reiniciarTemporizador);
+    document.addEventListener("keypress", reiniciarTemporizador);
+    document.addEventListener("click", reiniciarTemporizador);
+</script>
 <body>
     <header>
         <div class="container">
@@ -96,7 +116,6 @@ $conn->close();
                 // Si la conexión falla, lanzar una excepción personalizada
                 throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
             }
-            $_SESSION['dni'] = $dni;
             $sql_cuentas = "SELECT id_cuenta FROM titularcuenta WHERE dni_c = '$dni'";
             $resultado_cuentas = $conn->query($sql_cuentas);
             

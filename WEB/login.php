@@ -42,6 +42,18 @@
         //La consulta no devuelve nada cuando intentas inyeccion SQL
         if ($result->num_rows > 0) {  
             $_SESSION['dni'] = $dni;
+            $comentario = "Se ha iniciado sesión mediante login.php";
+            $fecha_inicio = date("Y-m-d H:i:s"); // Formato: Año-Mes-Día Hora:Minutos:Segundos
+            // Consulta para insertar los datos en la tabla sesiones
+            $sql_insertar_sesion = "INSERT INTO sesiones (dni_cliente, fecha_inicio,comentario) VALUES ('$dni', '$fecha_inicio','$comentario')";
+// Ejecutar la consulta
+if ($conn->query($sql_insertar_sesion) === TRUE) {
+    echo "La sesión se ha registrado correctamente.";
+} else {
+    echo "Error al registrar la sesión: " . $conn->error;
+}
+// Cerrar la conexión
+$conn->close();
             //Hora del sistema para hacer un insert en sesiones
             echo "<meta http-equiv='refresh' content='0; url=user.php'>";
             exit();

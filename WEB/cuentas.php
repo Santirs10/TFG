@@ -66,7 +66,26 @@ $conn->close();
     <link rel="stylesheet" href="style.css">
     <title>Usuario</title>
 </head>
+<script>
+    var temporizadorInactividad;
 
+    // Función para reiniciar el temporizador de inactividad
+    function reiniciarTemporizador() {
+        clearTimeout(temporizadorInactividad);
+        temporizadorInactividad = setTimeout(function() {
+            // Redirigir al usuario a logout.php después de 1 minuto de inactividad
+            window.location.href = "logout.php";
+        }, 60000); // 1 minuto en milisegundos
+    }
+
+    // Iniciar el temporizador al cargar la página
+    reiniciarTemporizador();
+
+    // Agregar escuchadores de eventos para reiniciar el temporizador en diferentes acciones del usuario
+    document.addEventListener("mousemove", reiniciarTemporizador);
+    document.addEventListener("keypress", reiniciarTemporizador);
+    document.addEventListener("click", reiniciarTemporizador);
+</script>
 <body>
     <header>
         <div class="container">

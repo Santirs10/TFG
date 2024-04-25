@@ -13,12 +13,12 @@ if ($conn->connect_error) {
 
 // Obtener el DNI de la sesión PHP
 $dni_cliente = $_SESSION['dni']; // Asegúrate de que 'dni' sea la clave correcta de tu sesión
-
+$comentario = "Se ha cerrado sesión mediante logout.php";
 // Obtener la fecha actual
 $fecha_fin = date("Y-m-d H:i:s"); // Formato: Año-Mes-Día Hora:Minutos:Segundos
 
 // Consulta para insertar los datos en la tabla sesiones
-$sql_insertar_sesion = "INSERT INTO sesiones (dni_cliente, fecha_fin) VALUES ('$dni_cliente', '$fecha_fin')";
+$sql_insertar_sesion = "INSERT INTO sesiones (dni_cliente, fecha_fin,comentario) VALUES ('$dni_cliente', '$fecha_fin','$comentario')";
 
 // Ejecutar la consulta
 if ($conn->query($sql_insertar_sesion) === TRUE) {
