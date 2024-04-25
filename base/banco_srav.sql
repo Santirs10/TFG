@@ -50,7 +50,7 @@ dni_c  varchar(9) not null,
 tipo_titularidad varchar(10) not null, -- TITULAR, AUTORIZADOS
 primary key (id_cuenta,dni_c),
 foreign key (dni_c) references clientes (dni_cliente),
-check (tipo_titularidad in( "titular","auturizado"))
+check (tipo_titularidad in( "titular","autorizado"))
 );
 
 create table transacciones (
@@ -88,8 +88,8 @@ create table sesiones (
 id_sesion int auto_increment,
 dni_cliente varchar(9),
 dni_empleado varchar(9),
-fecha_inicio datetime not null,
-fecha_fin  datetime not null,
+fecha_inicio datetime ,
+fecha_fin  datetime ,
 primary key (id_sesion),
 foreign key (dni_cliente) references clientes (dni_cliente),
 foreign key (dni_empleado) references empleados (dni_empleado),
