@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="bank.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Usuario</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Bienvenido
+                <?php echo $nombre ?>
+            </h1>
+            <p>Tu DNI es:
+                <?php echo $dni; ?>
+            </p>
+            <!-- Otros detalles del perfil -->
+            <nav>
+                <ul>
+                    <li><a href="user.php">Inicio</a></li>
+
+                    <li><a href="logout.php" style="float: rigth;">Cerrar sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <div class="fondos">
+            <!--select Suma de cuentas con DNI= $dni-->
+            <h2>Actualmente, tienes
+                <?php echo $saldo; ?>€.</h3>
+                <a href="fondos.php">Accede a tu ahorro.</a>
+        </div>
+        <div class="cuentas">
+            <h2>Cuentas</h2>
+            <a href="cuentas.php">Accede a tus cuentas </a>
+        </div>
+        <div class="transferencias">
+            <h2>Transferencias</h2>
+            <div> ¿Quieres realizar, o solicitar alguna transferencia?</div>
+        </div>
+    </div>
+</body>
+
+</html>
