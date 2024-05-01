@@ -1,10 +1,10 @@
 # TFG
 Trabajo final de grado de Administración De Sistemas Informáticos en Red. 
 
-//Esto servirá como una memoria adicional sobre que se ha ido realizando durante el proyecto.
-
 Integrantes del proyecto:
 Alejandro Vellisca y Santiago Rodríguez.
+Nombre del proyecto: DISEÑO Y PRUEBA DE SEGURIDAD DE UN SISTEMA GESTOR BANCARIO
+
 
 Descripción del proyecto:
 Este Trabajo Fin de Grado consiste en el desarrollo de una página web y una base de datos de una entidad bancaria, la intención es simular lo más cercano posible a la realidad el funcionamiento de un banco, posteriormente se realizarán los pasos que realizaría un atacante para vulnerar los datos y la seguridad e integridad del servicio. Utilizando ataques de denegación de servicio, inyección de código o ataques de penetración al servidor.
