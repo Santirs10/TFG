@@ -96,6 +96,7 @@ $conn->close();
             <!-- Otros detalles del perfil -->
             <nav>
                 <ul>
+                    <li><a href="archivos.php" style="float: left;">Sube tus nóminas</a></li>
                     <li><a href="logout.php" style="float: right;">Cerrar sesión</a></li>
                 </ul>
             </nav>
