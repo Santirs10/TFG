@@ -31,10 +31,10 @@
                 </lord-icon>
             </div>
             <div class="login">
-                Selecciona el archivo PDF
+                Selecciona la nomina que quieras subir
             </div>
 
-            <input style="color:transparent;" type="file" name="archivo_pdf" />
+            <input style="color:transparent;" type="file" name="archivo_pdf" accept=".pdf"/>
             <br>
             <br>
             <input type="submit" value="Subir PDF" />

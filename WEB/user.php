@@ -123,12 +123,12 @@ $conn->close();
             // Verificar si hay resultados
             if ($resultado_cuentas->num_rows > 0) {
                 // Mostrar todas las cuentas del cliente
-                while ($fila_cuenta = $resultado_cuentas->fetch_assoc()) {
+
                     echo "<div class='cuentas'>";
-                    echo "<a href='cuentas.php'>Accede a la cuenta ". $fila_cuenta["id_cuenta"] ."</a>";
+                    echo "<a href='cuentas.php'>Accede a tus cuentas </a>";
                     echo "</div>";
                     echo "<br>";
-                }
+                
             } else {
                 // Si no hay cuentas asociadas al cliente
                 echo "<p><a href='cuentas.php'>No se encuentran cuentas asociadas a este cliente </a></p>";
