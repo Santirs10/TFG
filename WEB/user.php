@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+if (isset($_GET['s']) && $_GET['s'] == 1) {
+    echo '<script>alert("La transacción se realizó exitosamente.");</script>';
+}
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['dni'])) {
     // Si el usuario no ha iniciado sesión, redirigirlo al formulario de inicio de sesión
@@ -142,6 +144,11 @@ $conn->close();
                 <a href="transferencias.php">¿Quieres realizar, o solicitar alguna transferencia?</a></div>
         </div>
     </div>
+    <footer>
+        <div class="container">
+            &copy; 2024 CommitBank. Todos los derechos reservados.
+        </div>
+    </footer>
 </body>
 
 </html>

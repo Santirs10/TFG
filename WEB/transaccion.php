@@ -10,7 +10,7 @@ if (!isset($_SESSION['dni'])) {
 $dni = $_SESSION['dni'];
 $cuenta = isset($_GET['cuenta']) ? $_GET['cuenta'] : null;
 $cuenta= htmlspecialchars($cuenta);
-
+$_SESSION['cuenta']=$cuenta;
 if ($cuenta === null) {
     echo '<p>Error: No se ha seleccionado una cuenta.</p>';
     exit;
@@ -48,6 +48,7 @@ if ($resultado->num_rows > 0) {
     // Obtener los detalles de la cuenta
     $row = $resultado->fetch_assoc();
     $saldo = $row['saldo'];
+    $_SESSION['saldo'] = $saldo;
     $sql_todos_numeros_cuenta = "SELECT id_cuenta FROM cuenta";
     $resultado_todos_numeros_cuenta = $conn->query($sql_todos_numeros_cuenta);
 
@@ -83,7 +84,7 @@ $conn->close();
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="bank.ico">
-    <title>Transaccion <?php echo $cuenta; ?></title>
+    <title>Transaccion - CommitBank <?php echo $cuenta; ?></title>
 </head>
 <script src="https://cdn.lordicon.com/lordicon.js"></script>
 <?php echo "<script> var arrayCuenta = '".$numeros_cuenta_json."';</script>"?>

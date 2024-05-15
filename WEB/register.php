@@ -253,6 +253,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
     </div>
+    <footer>
+        <div class="container">
+            &copy; 2024 CommitBank. Todos los derechos reservados.
+        </div>
+    </footer>
 </body>
 
 </html>

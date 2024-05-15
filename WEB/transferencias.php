@@ -25,7 +25,7 @@ $dni = $_SESSION['dni'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <title>Usuario</title>
+    <title>Transferencias - CommitBank</title>
 </head>
 <script>
     var temporizadorInactividad;
@@ -155,6 +155,11 @@ echo '<div style="width: calc(100% - 40px); max-width: 800px; margin: 20px; back
                 <a href="user.php">¿Quieres volver sin realizar cambios?</a></div>
         </div>
     </div>
+    <footer>
+        <div class="container">
+            &copy; 2024 CommitBank. Todos los derechos reservados.
+        </div>
+    </footer>
 </body>
 
 </html>

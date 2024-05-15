@@ -32,9 +32,9 @@ $conn->close();
 
 // Hacer insert into sesiones cogiendo la fecha para meterlo en fecha fin, y con el dni 
 
-// Eliminar todas las variables de sesi�n
+// Eliminar todas las variables de sesión
 session_unset();
-// Destruir la sesi�n
+// Destruir la sesión
 session_destroy();
 header("Location: index.html");
 exit();

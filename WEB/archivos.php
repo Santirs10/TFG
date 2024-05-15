@@ -8,7 +8,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="bank.ico">
-    <title>Prueba subida archivos </title>
+    <title>Nóminas - CommitBank</title>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
 </head>
 
