@@ -123,10 +123,10 @@ create table sesiones (
 id_sesion int auto_increment,
 dni_cliente varchar(9),
 dni_empleado varchar(9),
-fecha_inicio datetime not null,
-fecha_fin  datetime not null,
+fecha_inicio datetime,
+fecha_fin  datetime,
+comentario varchar(50),
 primary key (id_sesion),
-
 foreign key (dni_cliente) references clientes (dni_cliente),
 foreign key (dni_empleado) references empleados (dni_empleado),
 check (fecha_fin >=fecha_inicio)
