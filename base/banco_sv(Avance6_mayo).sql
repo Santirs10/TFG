@@ -74,7 +74,7 @@ VALUES (900000003, "87654321X", "titular");
 INSERT INTO titularcuenta (id_cuenta, dni_c, tipo_titularidad)
 VALUES (900000004, "23456789D", "autorizado");
 INSERT INTO titularcuenta (id_cuenta, dni_c, tipo_titularidad)
-VALUES (900000005, "98765432B", "autorizado");
+VALUES (900000005, "98765432M", "autorizado");
 INSERT INTO titularcuenta (id_cuenta, dni_c, tipo_titularidad)
 VALUES (900000006, "34567890C", "titular");
 
@@ -152,7 +152,7 @@ VALUES ("2345678901234567", "87654321X", 900000003, "credito", "2029-06-01", "bl
 INSERT INTO tarjetas (num_tarjeta, dni_titular, num_cuenta, tipo_tarjeta, fecha_vencimiento, estado_tarjeta)
 VALUES ("3456789012345678", "23456789D", 900000004, "monedero", "2028-07-01", "vencida");
 INSERT INTO tarjetas (num_tarjeta, dni_titular, num_cuenta, tipo_tarjeta, fecha_vencimiento, estado_tarjeta)
-VALUES ("4567890123456789", "98765432B", 900000005, "debito", "2030-08-01", "activa");
+VALUES ("4567890123456789", "98765432M", 900000005, "debito", "2030-08-01", "activa");
 INSERT INTO tarjetas (num_tarjeta, dni_titular, num_cuenta, tipo_tarjeta, fecha_vencimiento, estado_tarjeta)
 VALUES ("5678901234567890", "34567890C", 900000006, "credito", "2026-09-01", "bloqueada");
 
