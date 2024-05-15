@@ -103,43 +103,56 @@ $conn->close();
         </div>
     </header>
     <div class="container">
-        <div class="fondos">
-            <!--select Suma de cuentas con DNI= $dni-->
-            <h2>Actualmente, tienes
-                <?php echo $saldo; ?> €.</h2>
-                <br>
-        </div>
-        <div class="cuentas">
-            <h2>Cuentas: <?php 
+    <h2 style="text-align: center; font-size: 50px; font-weight: bold;">Escoge una cuenta para realizar la transferencia</h2>
+    <br>
+
+    <div class="cuentas">
+        
+            <h2> <?php 
             $conn = new mysqli("192.168.1.143", "webadmin", "2Q_hyTd2", "banco_sv");
+
             // Comprobar la conexión
             if ($conn->connect_error) {
                 // Si la conexión falla, lanzar una excepción personalizada
                 throw new Exception("No se pudo conectar a la base de datos. Por favor, inténtalo de nuevo más tarde.");
             }
-            $sql_cuentas = "SELECT id_cuenta FROM titularcuenta WHERE dni_c = '$dni'";
-            $resultado_cuentas = $conn->query($sql_cuentas);
-            
-            // Verificar si hay resultados
-            if ($resultado_cuentas->num_rows > 0) {
-                // Mostrar todas las cuentas del cliente
+            $sql = "SELECT * FROM titularcuenta where dni_c='$dni'";
+$resultado = $conn->query($sql);
+if ($resultado->num_rows > 0) {
+    while($fila = $resultado->fetch_assoc()) {
+        $id_cuenta = $fila["id_cuenta"];
+        $sql_saldo = "SELECT *
+              FROM cuenta c
+              INNER JOIN titularcuenta tc ON c.id_cuenta = tc.id_cuenta
+              WHERE c.id_cuenta = '$id_cuenta' AND tc.dni_c = '$dni'";
 
-                    echo "<div class='cuentas'>";
-                    echo "<a href='cuentas.php'>Accede a tus cuentas </a>";
-                    echo "</div>";
-                    echo "<br>";
-                
-            } else {
-                // Si no hay cuentas asociadas al cliente
-                echo "<p><a href='cuentas.php'>No se encuentran cuentas asociadas a este cliente </a></p>";
-            }
-            
+$resultado_saldo = $conn->query($sql_saldo);
+
+if ($resultado_saldo->num_rows > 0) {
+    // Obtenemos el saldo de la cuenta deseada
+    $fila_saldo = $resultado_saldo->fetch_assoc();
+    $saldo = $fila_saldo["saldo"];
+} else {
+    // Si no se encuentra la cuenta deseada, establecemos el saldo a 0
+    $saldo = 0;
+}
+echo '<div style="width: calc(100% - 40px); max-width: 800px; margin: 20px; background-color: #add8e6; border-radius: 20px; padding: 20px; box-sizing: border-box; box-shadow: 10px 0 8px rgba(0, 0, 0, 0.1);"><a href="transaccion.php?cuenta='.$fila["id_cuenta"] .'">';        echo "ID Cuenta: " . $fila["id_cuenta"] . "<br>";
+        echo "Eres " . $fila["tipo_titularidad"] . " de la cuenta <br>";
+        echo "Tienes " . $saldo . " € en esta cuenta";
+        echo "</a></div>";
+        echo "<br>";
+        
+    }
+} else {
+    echo "<p style='color: red;'>No tienes una cuenta asociada.</p>";
+}
+
             ?></h2>
         </div>
         <div class="transferencias">
-            <h2>Transferencias</h2>
+            <h2>Vuelve al inicio</h2>
             <div> 
-                <a href="transferencias.php">¿Quieres realizar, o solicitar alguna transferencia?</a></div>
+                <a href="user.php">¿Quieres volver sin realizar cambios?</a></div>
         </div>
     </div>
 </body>
