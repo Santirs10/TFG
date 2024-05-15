@@ -76,7 +76,7 @@ VALUES (900000004, "23456789D", "autorizado");
 INSERT INTO titularcuenta (id_cuenta, dni_c, tipo_titularidad)
 VALUES (900000005, "98765432M", "autorizado");
 INSERT INTO titularcuenta (id_cuenta, dni_c, tipo_titularidad)
-VALUES (900000006, "34567890C", "titular");
+VALUES (900000006, "34567890V", "titular");
 
 create table transacciones ( 
 id_transaccion int auto_increment,
@@ -154,7 +154,7 @@ VALUES ("3456789012345678", "23456789D", 900000004, "monedero", "2028-07-01", "v
 INSERT INTO tarjetas (num_tarjeta, dni_titular, num_cuenta, tipo_tarjeta, fecha_vencimiento, estado_tarjeta)
 VALUES ("4567890123456789", "98765432M", 900000005, "debito", "2030-08-01", "activa");
 INSERT INTO tarjetas (num_tarjeta, dni_titular, num_cuenta, tipo_tarjeta, fecha_vencimiento, estado_tarjeta)
-VALUES ("5678901234567890", "34567890C", 900000006, "credito", "2026-09-01", "bloqueada");
+VALUES ("5678901234567890", "34567890V", 900000006, "credito", "2026-09-01", "bloqueada");
 
 /*funcion para generar un CVV dinamico posible implementacion para una tarjeta virtual
 DELIMITER $$
