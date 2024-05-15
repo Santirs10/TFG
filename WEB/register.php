@@ -122,7 +122,7 @@
                 </lord-icon>
             </div>
             <div class="login">
-                Bienvenido al nano-banco
+                Bienvenido al CommitBank
             </div>
             <div class="form-group row">
                 <label for="staticEmail" class="col-sm-2 col-form-label">Introduzca su email</label>
