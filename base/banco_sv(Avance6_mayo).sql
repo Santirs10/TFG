@@ -60,11 +60,12 @@ values(900000006,"corriente",1200,"2024-05-01 18:44:24",NULL,"fijo",250,"activa"
 INSERT INTO cuenta(id_cuenta, tipo_cuenta, saldo, fecha_apertura, fecha_cierre, tipo_interes, limite_retiro, estado_cuenta) 
 values(900000007,"ahorro",1450000,"2024-05-01 19:00:55",NULL,"fijo",24000,"bloqueada");
 create table titularcuenta( 
-id_cuenta int auto_increment,
+id_cuenta int,
 dni_c  varchar(9) not null,
 tipo_titularidad varchar(10) not null, 
 primary key (id_cuenta,dni_c),
 foreign key (dni_c) references clientes (dni_cliente),
+foreign key (id_cuenta) references cuenta (id_cuenta),
 check (tipo_titularidad in( "titular","autorizado"))
 );
 INSERT INTO titularcuenta (id_cuenta, dni_c, tipo_titularidad)
